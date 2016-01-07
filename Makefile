@@ -1,9 +1,9 @@
 UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S), Darwin))
+ifeq ($(UNAME_S),Darwin)
 	gflags = -D FAKE
 endif
 
-ifneq ($(UNAME_S), Darwin))
+ifneq ($(UNAME_S), Darwin)
 	lflags = -Wl,-R -Wl,./lib/ -pthread  -lupm-adafruitms1438
 endif
 
