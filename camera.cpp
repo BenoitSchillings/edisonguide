@@ -11,7 +11,7 @@ static unsigned long GetTickCount()
    return (ts.tv_sec*1000 + ts.tv_nsec/(1000*1000));
 }
 
-int  init()
+int  camera_init()
 {
 	int width;
 	int height;

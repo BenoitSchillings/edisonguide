@@ -213,12 +213,14 @@ void *com_init_private(void *com_param)
 }	
 
 //-----------------------------------------------------------
+extern int camera_init();
 
 int main()
 {
 	AO	*ao;
 	GuideCam*guide;
-
+	printf("start\n");
+	camera_init();
 	ao = new AO();
 	guide = new GuideCam();
 	Pos a_pos = guide->FindStar();
