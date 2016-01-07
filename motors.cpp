@@ -1,9 +1,17 @@
 #include <unistd.h>
 #include <signal.h>
 #include <iostream>
-#include "adafruitms1438.h"
-
 #include "motors.h"
+
+
+#ifdef FAKE
+	Motors::Motors() {}
+	Motors::~Motors() {}
+void	Motors::Steps(int a, int b) {}
+#else
+
+
+#include "adafruitms1438.h"
 
 using namespace std;
 using namespace upm;
@@ -12,6 +20,7 @@ using namespace upm;
 #define M1 AdafruitMS1438::STEPMOTOR_M34 
 
 //-------------------------------------------------------------------------
+
 static upm::AdafruitMS1438     *ms;
 
 
@@ -22,7 +31,6 @@ static upm::AdafruitMS1438     *ms;
   	ms = new upm::AdafruitMS1438(ADAFRUITMS1438_I2C_BUS, ADAFRUITMS1438_DEFAULT_I2C_ADDR);
   	ms->disableStepper(M0);
   	ms->disableStepper(M1);
-  // configure for a NEMA-17, 200 steps per revolution
   	ms->stepConfig(M0, 200);
   	ms->stepConfig(M1, 200);
 
@@ -49,3 +57,5 @@ static upm::AdafruitMS1438     *ms;
 void	Motors::Steps(int a, int b)
 {
 }
+
+#endif
