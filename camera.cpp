@@ -1,14 +1,16 @@
 #include "stdio.h"
-//#include "highgui/highgui_c.h"
 #include "ASICamera.h"
 #include <sys/time.h>
 #include <time.h>
 
 static unsigned long GetTickCount()
 {
+   #ifdef FAKE
+   #else 
    struct timespec ts;
    clock_gettime(CLOCK_MONOTONIC,&ts);
    return (ts.tv_sec*1000 + ts.tv_nsec/(1000*1000));
+   #endif
 }
 
 int  init()
@@ -36,8 +38,7 @@ int  init()
 	int numDevices = getNumberOfConnectedCameras();
 	if(numDevices <= 0)
 	{
-		printf("no camera connected, press any key to exit\n");
-		getchar();
+		printf("no camera connected\n");
 		return -1;
 	}
 	CamNum = 0;
@@ -47,7 +48,6 @@ int  init()
 	if(!bresult)
 	{
 		printf("OpenCamera error,are you root?,press any key to exit\n");
-		getchar();
 		return -1;
 	}
 	initCamera(); //this must be called before camera operation. and it only need init once
@@ -62,11 +62,9 @@ int  init()
 
 	
 	
-	while(!setImageFormat(width, height, 1, IMG_RAW16))
-	{
-		printf("Set format error, please check the width and height\n ASI120's data size(width*height) must be integer multiple of 1024\n");
-		printf("Please input the width and height again£¬ie. 640 480\n");
-		scanf("%d %d", &width, &height);
+	while(!setImageFormat(width, height, 1, IMG_RAW16)) {
+		printf("incorrect image size\n");
+		return -1;	
 	}
 	setValue(CONTROL_EXPOSURE, 33*1000, true); //auto exposure
 	setValue(CONTROL_GAIN,50, true); //auto exposure
