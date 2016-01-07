@@ -17,13 +17,6 @@ static upm::AdafruitMS1438     *ms;
 
 //-------------------------------------------------------------------------
 
-
-	Motors::Motors()
-{
-}
-
-//-------------------------------------------------------------------------
-
 	Motors::Motors()
 {
   	ms = new upm::AdafruitMS1438(ADAFRUITMS1438_I2C_BUS, ADAFRUITMS1438_DEFAULT_I2C_ADDR);
@@ -37,7 +30,7 @@ static upm::AdafruitMS1438     *ms;
   	ms->setStepperSpeed(M1, 10);
 
   	ms->setStepperDirection(M0, AdafruitMS1438::DIR_CW);
-  	ms->setStepperDirection(m1, AdafruitMS1438::DIR_CW); 
+  	ms->setStepperDirection(M1, AdafruitMS1438::DIR_CW); 
   	ms->enableStepper(M0);
   	ms->enableStepper(M1);
 
